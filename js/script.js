@@ -22,20 +22,25 @@ async function getAllPosts() {
 
     const response = await fetch(url)
 
-    console.log(response)
+   // console.log(response)
 
     const data = await response.json()
-
-    console.log(data)
+    
+   //console.log(data)
 
     loadingElement.style.display = 'none'
 
     data.map( (post) => {
 
-        const div = document.createElement('div');
+       /*  const div = document.createElement('div');
         const title = document.createElement('h2');
         const body = document.createElement('p');
         const link = document.createElement('a');
+
+        div.setAttribute('id', 'post-box');
+        title.setAttribute('id', 'post-title');
+        body.setAttribute('id', 'post-text');
+        link.setAttribute('id', 'post-btn');
 
         title.innerText = post.title;
         body.innerText = post.body;
@@ -50,10 +55,156 @@ async function getAllPosts() {
         div.appendChild(body);
         div.appendChild(link);
 
-        postContainer.appendChild(div);
+        postContainer.appendChild(div); */
+
+        
+        return data
 
     });
+
+//=================logica para os controles============================
+
+let perPage = 5
+
+const state = {
+    page: 1,
+    perPage,
+    totalPage: Math.ceil(data.length / perPage)
 }
+
+
+const controls = {
+    next() {
+        state.page++
+
+        const lastPage = state.page > state.totalPage
+        if (lastPage) {
+            state.page--
+        }
+    },
+    prev() {
+        state.page--
+
+        const firstPage = state.page < 1
+        if (firstPage) {
+            state.page = 1
+        }
+    },
+    goto(page) {
+        state.page = page
+
+        if (page < 1) {
+            state.page = 1
+        } 
+        
+        if (page > state.totalPage) {
+            state.page = state.totalPage
+        };
+        
+    },
+
+    createListeners() {
+        html.get('.first').addEventListener('click', () => {
+            controls.goto(1)
+            Help()
+        } )
+
+        
+        html.get('.last').addEventListener('click', () => {
+            controls.goto(state.totalPage)
+            Help()
+        } )
+
+        html.get('.prev').addEventListener('click', () => {
+            controls.prev()
+            Help()
+        } )
+
+        html.get('.next').addEventListener('click', () => {
+            controls.next()
+            Help()
+        } )
+        
+    }
+
+  
+}
+
+
+const html = {
+    get(element) {
+        return document.querySelector(element)
+    }
+}
+
+const list = {
+    create() {
+        //data.map( () => {
+          
+    
+            const div = document.createElement('div');
+            const title = document.createElement('h2');
+            const body = document.createElement('p');
+            const link = document.createElement('a');
+    
+            title.innerText = data.title;
+            body.innerText = data.body;
+            link.innerText = 'Leia este post';
+            link.setAttribute('href', `./post.html?id=${data.id}`);
+    
+            div.appendChild(title);
+            div.appendChild(body);
+            div.appendChild(link);
+    
+            postContainer.appendChild(div);
+    
+        //})
+
+        
+        
+
+    },
+    update() {
+        console.log('doink')
+       
+        let page = state.page - 1
+        let start = page * state.perPage
+        let end = start + state.perPage
+
+        const paginatedItems = data.slice(start, end)
+
+        console.log(data.slice(start, end))
+        
+                
+        paginatedItems.forEach(list.create);
+    }
+}
+
+function Help() {
+    
+    console.log(state.page)
+    list.update()
+}  
+
+function init() {
+    list.update()
+    controls.createListeners()
+}
+
+
+  init()
+    
+}
+//console.log(dataForControls)
+//const data2 = getAllPosts();
+//console.log(data2)
+//===================================================
+
+ 
+
+
+
+
 
 //pegar cada post individual
 
