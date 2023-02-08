@@ -6,31 +6,49 @@
 }
 
 body {
-    background: linear-gradient(231deg, rgba(15,68,10,1) 0%, rgba(11,180,172,1) 38%, rgba(6,64,13,1) 100%);
+        
+    height: 100vh;
+    background-image: url("../img/back001.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .body_box {
        
-    padding: 2rem;
+    padding: 1rem 2rem 2rem 2rem;
     border-radius: 10px;
-    margin: 5rem;
+    margin: 1rem 5rem 1rem 5rem;
     background-color: rgba(30, 30, 30, 0.45);
+}
+
+h1 {
+    color: #fff;
+    padding-bottom: 1rem;
+    
 }
 
 #posts-container {
     display: grid;
-    grid-gap: 30px;
+    grid-gap: 15px;
     grid-template-columns: repeat(3, minmax(200px, 2fr));
 }
 
 #post-box{
+    height: 230px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid rgb(74, 76, 245);
     padding: 1rem;
     border-radius: 10px;
-    background: linear-gradient(231deg, rgba(35,93,215,1) 0%, rgba(9,20,138,1) 100%);
+    background: linear-gradient(231deg, rgb(255, 255, 255) 0%, rgb(168, 168, 168) 100%);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 #post-title {
     margin-bottom: 10px;
@@ -38,7 +56,7 @@ body {
 }
 #post-text{
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 a, input[type="submit"] {
@@ -53,14 +71,172 @@ a, input[type="submit"] {
     font-size: 1em;
     border: none;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .pagination {
     cursor: pointer;
-    background-color: aliceblue;
-    width: 500px;
-    margin: auto;
+    
+    width: 60%;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    
 }
 
+.numbers {
+    width: 35%;
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+    
+}
+
+.numbers :hover {
+    color: rgb(255, 0, 0);
+}
+
+#ativo {
+    color: rgb(5, 113, 228);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+#btnVisible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.8) 0px 15px 12px;
+}
+
+#pageBtn {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.8) 0px 15px 12px;
+}
+
+.btnBox01 {
+        
+    display: flex;
+    flex-direction: column-reverse;
+    flex-direction: row;
+}
+
+.btnBox02 {
+    display: flex;
+    flex-direction: column;
+    flex-direction: row;
+}
+
+@media (max-width: 1200px) {
+    #posts-container {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: repeat(2, minmax(200px, 2fr));
+    }
+    .body_box {
+       
+        padding: 1rem;
+        
+        margin: 1rem;
+        
+    }
+    
+}
+
+@media (max-width: 900px) {
+
+    .btnBox01 {
+        
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .btnBox02 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .numbers {
+        font-size: 25px;
+        width: 60%;
+    }
+   
+    #pageBtn {
+        height: 40px;
+        margin: 8px;
+    }
+
+    #posts-container {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: repeat(2, minmax(200px, 2fr));
+    }
+
+    #btnVisible {
+        margin: 5px 8px 5px 8px;
+    }
+
+    #ativo {
+        margin: 5px 8px 5px 8px;
+    }
+
+    #post-box{
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid rgb(74, 76, 245);
+        padding: 1rem;
+       
+    }
+    
+    .body_box {
+       
+        padding: 0.8rem;
+        margin: 0.8rem;
+        
+    }
+    body {
+    
+        
+        background-repeat: no-repeat;
+        height: auto;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .pagination {
+        cursor: pointer;
+        
+        width: 90%;
+        padding-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+}

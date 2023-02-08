@@ -11,6 +11,7 @@ const commentForm = document.querySelector('#comment-form');
 const emailInput = document.querySelector('#email');
 const bodyInput = document.querySelector('#body')
 
+
 // pegar id da url
 
 const urlSearchParams = new URLSearchParams(window.location.search)
@@ -30,51 +31,32 @@ async function getAllPosts() {
 
     loadingElement.style.display = 'none'
 
-    data.map( (post) => {
+    data.map( () => {
 
-       /*  const div = document.createElement('div');
-        const title = document.createElement('h2');
-        const body = document.createElement('p');
-        const link = document.createElement('a');
-
-        div.setAttribute('id', 'post-box');
-        title.setAttribute('id', 'post-title');
-        body.setAttribute('id', 'post-text');
-        link.setAttribute('id', 'post-btn');
-
-        title.innerText = post.title;
-        body.innerText = post.body;
-        link.innerText = 'Leia este post';
-        link.setAttribute('href', `./post.html?id=${post.id}`);
-        
-
-
-
-
-        div.appendChild(title);
-        div.appendChild(body);
-        div.appendChild(link);
-
-        postContainer.appendChild(div); */
-
-        
+              
         return data
 
     });
 
 //=================logica para os controles============================
 
-let perPage = 5
+
+
+let perPage = 6
 
 const state = {
     page: 1,
     perPage,
-    totalPage: Math.ceil(data.length / perPage)
+    totalPage: Math.ceil(data.length / perPage),
+    maxBtnVisible: 5
 }
+
+
 
 
 const controls = {
     next() {
+        
         state.page++
 
         const lastPage = state.page > state.totalPage
@@ -91,7 +73,7 @@ const controls = {
         }
     },
     goto(page) {
-        state.page = page
+        state.page = +page
 
         if (page < 1) {
             state.page = 1
@@ -100,8 +82,11 @@ const controls = {
         if (page > state.totalPage) {
             state.page = state.totalPage
         };
+    },    
+    
         
-    },
+
+    
 
     createListeners() {
         html.get('.first').addEventListener('click', () => {
@@ -115,15 +100,22 @@ const controls = {
             Help()
         } )
 
+        
+
         html.get('.prev').addEventListener('click', () => {
             controls.prev()
             Help()
         } )
 
         html.get('.next').addEventListener('click', () => {
+            
             controls.next()
             Help()
         } )
+        
+        
+            
+       
         
     }
 
@@ -138,19 +130,26 @@ const html = {
 }
 
 const list = {
-    create() {
-        //data.map( () => {
-          
     
+    create(item) {
+            
+        
             const div = document.createElement('div');
             const title = document.createElement('h2');
             const body = document.createElement('p');
             const link = document.createElement('a');
+
+            
+
+            div.setAttribute('id', 'post-box');
+            title.setAttribute('id', 'post-title');
+            body.setAttribute('id', 'post-text');
+            link.setAttribute('id', 'post-btn');
     
-            title.innerText = data.title;
-            body.innerText = data.body;
+            title.innerText = item.title;
+            body.innerText = item.body;
             link.innerText = 'Leia este post';
-            link.setAttribute('href', `./post.html?id=${data.id}`);
+            link.setAttribute('href', `./post.html?id=${item.id}`);
     
             div.appendChild(title);
             div.appendChild(body);
@@ -158,15 +157,12 @@ const list = {
     
             postContainer.appendChild(div);
     
-        //})
-
-        
-        
-
     },
     update() {
+        list.clear()
+        
         console.log('doink')
-       
+        
         let page = state.page - 1
         let start = page * state.perPage
         let end = start + state.perPage
@@ -177,17 +173,76 @@ const list = {
         
                 
         paginatedItems.forEach(list.create);
+    },
+    clear() {
+        console.log('limpo')
+        html.get('#posts-container').innerHTML = ""
+        //let cleanPage = document.querySelector('#posts-container')
+          //  cleanPage.parentNode.removeChild(cleanPage);
+    }
+    
+}
+
+const buttons = {
+    element: html.get('.pagination .numbers'),
+
+    create(number) {
+        const button = document.createElement('div')
+
+        button.innerHTML = number;
+        button.id = 'btnVisible'
+
+        if(state.page == number) {
+            button.id = 'ativo'
+        }
+
+        button.addEventListener('click', (event) => {
+            const page = event.target.innerText
+
+            controls.goto(page)
+            Help()
+        })
+
+        buttons.element.appendChild(button)
+    },
+    updade() {
+        buttons.element.innerHTML = ""
+        const {maxL, maxR} = buttons.calculateBtn()
+
+        for (let page = maxL; page <= maxR; page++) {
+            buttons.create(page)
+        }
+
+        console.log(maxL, maxR)
+    },
+    calculateBtn() {
+        let maxL = (state.page - Math.floor(state.maxBtnVisible / 2))
+        let maxR = (state.page + Math.floor(state.maxBtnVisible / 2))
+        
+        if (maxL < 1) {
+            maxL = 1
+            maxR = state.maxBtnVisible
+        }
+
+        if (maxR > state.totalPage) {
+            maxL = state.totalPage - (state.maxBtnVisible - 1)
+            maxR = state.totalPage
+        }
+        return {maxL, maxR}
+
     }
 }
 
 function Help() {
-    
-    console.log(state.page)
-    list.update()
+
+   list.update()
+   buttons.updade()
 }  
 
 function init() {
-    list.update()
+    console.log('init')
+    
+    Help()
     controls.createListeners()
 }
 
@@ -228,6 +283,8 @@ async function getPost(id) {
     title.innerText = dataPost.title;
     body.innerText = dataPost.body;
 
+    title.id = 'comment-title'
+
     postContainer2.appendChild(title)
     postContainer2.appendChild(body)
 
@@ -246,12 +303,19 @@ function CreateComment(comment) {
     const div = document.createElement('div');
     const email = document.createElement('h3')
     const commentBody = document.createElement('p')
+    const line = document.createElement('hr')
+    const space = document.createElement('br')
 
     email.innerText = comment.email
     commentBody.innerText = comment.body
 
+    email.id = 'comments-email'
+    div.id = 'comments-box'
+
     div.appendChild(email)
     div.appendChild(commentBody)
+    div.appendChild(space)
+    div.appendChild(line)
 
     commentsContainer.appendChild(div)
 

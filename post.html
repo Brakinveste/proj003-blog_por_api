@@ -5,17 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link   rel="stylesheet" href="css/style-post.css">
     <script src="js/script.js" defer></script>
 </head>
 <body>
-    <p id="loading">Carregando...</p>
-    <div id="post" class="hide">
-        <a href="index.html">voltar</a>
-        <div id="post-container"></div>
-        <h2>Comentários:</h2>
+    <div class="post-box">
+        <p id="loading">Carregando...</p>
+        <div id="post" class="hide">
+            <a href="index.html">voltar</a>
+            <div id="post-container"></div>
+        </div>
+    </div>
+    <h2 class="comments-area">Comentários:</h2>
+    <div class="post-comments1">   
+        <div class="comment"> 
+            <h2>Deseja fazer um comentário?</h2>
+        </div>    
         <form id="comment-form">
-            <div>
+            <div class="comment-form">
                 <label for="email">Seu email:</label>
                 <input 
                     type="email"
@@ -24,9 +31,8 @@
                     placeholder="Digite o seu e-mail"
                     required
                     />
-            </div>
-            <div>
-                <label for="body">Seu comentário</label>
+            
+                <label for="body">Seu comentário:</label>
                 <textarea 
                     name="body"
                     id="body"
@@ -34,9 +40,12 @@
                     required
                     ></textarea>
             </div>
-            <input type="submit" value='Enviar'/>
-            
+            <div class="form-btn">
+                <input type="submit" value='Enviar'/>
+            </div>
         </form>
+    </div>
+    <div class='post-comments2'>
         <div id="comments-container"></div>
     </div>
 </body>

@@ -5,24 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link class="soturno"  rel="stylesheet" href="css/style.css">
+    
     <script src="js/script.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="body_box">
-        <h1>Post do Blog</h1>
+        <div>
+            <h1>Post do Blog</h1>
+            
+        </div>
         <p id="loading">Carregando...</p>
         <div id="posts-container"></div>
     </div>
     <div class="pagination">
-        <div class="first">primeiro</div>
-        <div class="prev">anterior</div>
-        <div class="numbers">
-            <div></div>    
+        <div class="btnBox01">
+            <div id='pageBtn' class="first">Primeiro</div>
+            <div id='pageBtn' class="prev">Anterior</div>
         </div>
-        <div class="next">próximo</div>
-        <div class="last">última</div>
+        <div  class="numbers">
+            <div>1</div>    
+        </div>
+        <div class="btnBox02">
+            <div id='pageBtn' class="next">Próximo</div>
+            <div id='pageBtn' class="last">Última</div>
+        </div>    
     </div>
 </body>
 </html>
